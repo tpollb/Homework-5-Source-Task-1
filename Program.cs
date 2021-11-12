@@ -131,6 +131,7 @@ namespace Homework_4_Source_Task_3._1
             int MatrixSize = 1;
             int MinNuber = 0;
             int MaxNuber = 20;
+            bool successfullyParsed = default;
 
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Тема 5. Домашнее задание.\n");
@@ -139,11 +140,12 @@ namespace Homework_4_Source_Task_3._1
             Console.WriteLine("Задание 1.1. Создать метод, умножающий матрицу на число.\n");
             Console.ResetColor();
 
-            while (MatrixSize < 2 || MatrixSize > 255)
+            while ((MatrixSize < 2 || MatrixSize > 255) & successfullyParsed == false)
             {
                 Console.WriteLine("Введите размерность матрицы от 2 до 255: ");
-                MatrixSize = int.Parse(Console.ReadLine());
+                successfullyParsed = int.TryParse(Console.ReadLine(), out MatrixSize);
             }
+            successfullyParsed = false;
 
             int[,] matrix = GenerateRandomSymmetricMatrix(MatrixSize, MinNuber, MaxNuber);
             int[,] matrix1 = GenerateRandomSymmetricMatrix(MatrixSize, MinNuber, MaxNuber);
@@ -151,12 +153,13 @@ namespace Homework_4_Source_Task_3._1
             Console.WriteLine($"Наша матрица:\n");
             DisplayMatrix(matrix);
 
-            while (n < -255 || n > 255)
+            
+            while (successfullyParsed == false)
             {
-                Console.WriteLine("Введите множитель от -255 до 255: ");
-                n = int.Parse(Console.ReadLine());
+                Console.WriteLine("Введите множитель: ");
+                successfullyParsed = int.TryParse(Console.ReadLine(), out n);
             }
-
+            
             int[,] MultMatrix = MatrixMultiplicationByNumber(matrix, n);
 
             Console.WriteLine($"Результат умножения нашей исходной матрицы на число:\n");
